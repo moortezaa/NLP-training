@@ -1,6 +1,6 @@
 import math
 import datetime
-
+from Utils import *
 
 def CalcProbabilities(N: int, corpus: str) -> dict:
     sentences = corpus.split("\n")
@@ -125,28 +125,6 @@ def CalcProbabilitiesLogWithAddOneSmoothing(N: int, corpus: str) -> dict:
     return probabilities
 
 
-def showProgress(i, iterable, startDateTime):
-    now = datetime.datetime.now()
-    progress = (i + 1) / len(iterable) * 100
-    intprog = int(progress)
-    elapsed = now - startDateTime
-    print(
-        "[\033[01m\033[32m"
-        + "■" * intprog
-        + "\033[0m\033[37m"
-        + "-" * (100 - intprog)
-        + "\033[0m]",
-        "%.2f%%" % progress,
-        "elapsed: ",
-        elapsed,
-        "remaining:",
-        datetime.timedelta(
-            seconds=int(elapsed.total_seconds() / progress * (100 - progress))
-        ),
-        end="\r",
-    )
-
-
 def CalcSentenceProbability(N: int, probabilities: dict, sentence: str) -> float:
     sentence = "<s> " + sentence + " </s>"
     words = sentence.split(" ")
@@ -200,6 +178,3 @@ def increaseSequencesLenght(sequences: list, words: list):
 
 def NormalizeCorpus(corpus:str):
     return corpus.lower()
-
-def AntilogProbability(prob):
-    return math.exp(prob)
